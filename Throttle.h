@@ -19,12 +19,12 @@ private:
 		explicit throttle_cbuf(const size_t size, const clock_t interval) : 
 			m_size(size), m_interval (interval), m_head(0), m_tail(0), m_empty(true) 
 		{
-			m_buffer = new clock_t[size];
+			m_buffer = size > 0 ? new clock_t[size] : 0;
 		}
 		
 		~throttle_cbuf() 
 		{
-			delete [] m_buffer;
+			if (m_buffer) delete [] m_buffer;
 		}
 		
 		bool push(clock_t clock)
